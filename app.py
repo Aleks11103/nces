@@ -16,12 +16,46 @@ def minjust_30101(orgName):
     url = 'https://apimgw.core.oais.by:10446/minjust-30101-directservice/v1/egr/short/name'
     response = requests.get(url=url, headers=headers, params=params, verify=False, proxies=proxy)
     if response.status_code == 200:
+        # Достать и вернуть данные о предприятии по названию
         return json.loads(response.text)
     raise ValueError("Response not 200")
 
 
 def minjust_30102(regNum):
-    pass
+    params = {'regNum': regNum}
+    url = 'https://apimgw.core.oais.by:8247/minjust-30102-directservice/v1/egr/info/num'
+    response = request.get(url=url, headers=headers, params=params, verify=False, proxies=proxy)
+    if response.status_code == 200:
+        # Достать и вернуть данные о предприятии по номеру (УНП)
+        return json.loads(response.text)
+    raise ValueError("Response not 200")
+
+
+def minjust_30105(regNum, dateFrom):
+    params = {
+        'regNum': regNum,
+        'dateFrom': dateFrom
+    }
+    url = 'https://apimgw.core.oais.by:8247/minjust-30105-directservice/v1/osp/num'
+    response = request.get(url=url, headers=headers, params=params, verify=False, proxies=proxy)
+    if response.status_code == 200:
+        # Достать и вернуть данные о предприятии по названию и дате
+        return json.loads(response.text)
+    raise ValueError("Response not 200")
+
+
+def minjust_30106(regNum, dateFrom, dateTo):
+    params = {
+        'regNum': regNum,
+        'dateFrom': dateFrom,
+        'dateTo': dateTo
+    }
+    url = 'https://apimgw.core.oais.by:8247/minjust-30106-directservice/v1/egr/info/period'
+    response = request.get(url=url, headers=headers, params=params, verify=False, proxies=proxy)
+    if response.status_code == 200:
+        # Достать и вернуть данные о ИП или юрлице за период времени по регистрационному номеру
+        return json.loads(response.text)
+    raise ValueError("Response not 200")
 
 
 @app.route('/api/v1.0/oaismns/', methods=['GET'])
